@@ -1,9 +1,7 @@
 package info.scheinfrei.log4j;
 
-import org.apache.log4j.Category;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.apache.log4j.spi.LoggingEvent;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,8 +48,8 @@ public class BasicTest
     {
         InfluxDbAppender appender = new InfluxDbAppender();
         LoggingEvent event = new LoggingEvent(BasicTest.class.getName(),
-                                              Category.getInstance(BasicTest.class),
-                                              Priority.WARN,
+                                              Logger.getLogger(BasicTest.class),
+                                              Level.WARN,
                                               "test 12",
                                               new Exception("boom"));
         appender.doAppend(event);
@@ -62,8 +60,8 @@ public class BasicTest
     {
         InfluxDbAppender appender = new InfluxDbAppender();
         LoggingEvent event = new LoggingEvent(BasicTest.class.getName(),
-                                              Category.getInstance(BasicTest.class),
-                                              Priority.WARN,
+                                              Logger.getLogger(BasicTest.class),
+                                              Level.WARN,
                                               "test 12",
                                               null);
         appender.doAppend(event);
