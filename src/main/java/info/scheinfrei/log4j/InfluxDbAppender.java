@@ -1,8 +1,7 @@
 package info.scheinfrei.log4j;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -30,6 +29,7 @@ import org.influxdb.dto.Pong;
 import com.google.common.base.Joiner;
 
 import okhttp3.OkHttpClient;
+import info.scheinfrei.log4j.InfluxDbAppender;
 
 /**
  * Main class that uses InfluxDb to store log entries into.
@@ -95,7 +95,7 @@ public class InfluxDbAppender extends AppenderSkeleton {
 			}
 		} catch (Exception e) {
 			errorHandler.error("Error setting up InfluxDb logging Database at " + getConnectUrl() + ": " + e);
-
+			influxDB = null;
 		}
 
 	}
@@ -146,7 +146,6 @@ public class InfluxDbAppender extends AppenderSkeleton {
 		} catch (Exception e) {
 			LogLog.error("Error ", e);
 			errorHandler.error("Error writing point to InfluxDb logging Database at " + getConnectUrl() + ": " + e);
-
 		}
 
 	}
@@ -315,7 +314,7 @@ public class InfluxDbAppender extends AppenderSkeleton {
 		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
 		try {
-			FileInputStream tStoreIS = new FileInputStream(new File(truststore));
+			InputStream tStoreIS = InfluxDbAppender.class.getClassLoader().getResourceAsStream(truststore);
 			KeyStore TrustStore = KeyStore.getInstance("jks");
 			TrustStore.load(tStoreIS, null);
 			tmFac = TrustManagerFactory.getInstance("SunX509");

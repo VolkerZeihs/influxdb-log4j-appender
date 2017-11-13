@@ -23,7 +23,7 @@ public class BasicTestSsl
 		influxApp.setHost("127.0.0.1");
 		influxApp.setPort(8086);
 		influxApp.setSsl("yes");
-		influxApp.setTruststore("C:\\TrustCerts.jks");
+		influxApp.setTruststore("TrustCerts.jks");
 		influxApp.setAppName("unittest");
 		influxApp.activateOptions();
 		influxApp.setConsistencyLevelWrite("QUORUM");
